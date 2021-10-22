@@ -4,8 +4,12 @@ const app = express()
 const tasks = require('./routes/tasks')
 const slack = require('./routes/slack')
 const email = require('./routes/email')
-    //middleware
-app.use(express.static(path.join(__dirname, 'public')));
+require('dotenv').config();
+const notFound = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/error-handler');
+
+//middleware
+app.use(express.static('./public'));
 app.use(express.json());
 
 //routes
