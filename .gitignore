@@ -1,0 +1,3 @@
+/node_modules
+/slackBot/__pycache__
+/slackBot/.env

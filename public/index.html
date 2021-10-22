@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <!-- normalize css -->
+    <link rel="stylesheet" href="./normalize.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="./main.css" />
+    <title>Task Manager</title>
+  </head>
+  <body>
+    <form class="task-form">
+      <h4>task manager</h4>
+      <div class="form-control">
+        <input
+          type="text"
+          name="name"
+          class="task-input"
+          placeholder="e.g. wash dishes"
+        />
+        <button type="submit" class="btn submit-btn">submit</button>
+      
+      <div class="form-alert"></div>
+    </form>
+    </div>
+    <div class="sender-form">
+       <div class="slack-div">
+        <input
+          type="text"
+          class="slack-input"
+          placeholder="slack message"
+        />
+    <button onclick="sendSlackMessage()" class="btn slack-btn">Send Slack</button>
+    
+      </div>
+      <div class="slack-div">
+        <input type="text" class="email-text-input" placeholder="email message body"/>
+        <input type="text" class="email-to-input" placeholder="send email to"/>
+    <button onclick="sendEmail()" class="btn slack-btn">Send Email</button>
+    </div>
+      <div class="slack-div">
+    <input type="text" class="slack-channel-input" placeholder="Slack channel name"/>
+    <input type="text" class="slack-join-input" placeholder="email message for slack join"/>
+    <button onclick="createChannel()" class="btn slack-btn">Create Channel</button>
+      </div>
+      </div> 
+    <section class="tasks-container">
+      <p class="loading-text">Loading...</p>
+      <div class="tasks"></div>
+    </section>
+    <!-- axios -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./browser-app.js"></script>
+  </body>
+</html>
