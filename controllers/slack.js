@@ -6,38 +6,21 @@ const token = process.env.SLACK_API_TOKEN;
 const client = new WebClient(token);
 
 const sendMessage = asyncWrapper(async(req, res) => {
-    try {
-        // Call the chat.postMessage method using the WebClient
-        const result = await client.chat.postMessage({
-            channel: '#new',
-            text: ':100: Hello :tada:'
-        });
-        //console.log(result);
-    } catch (error) {
-        // console.error(error);
+    const messageResult = await client.chat.postMessage({ channel: '#new', text: ':100:' + req.body.message + ':tada:' });
+    if (!messageResult.ok) {
+        return next(createCustomError(`Error : ${messageResult['error']}`, 500))
     }
+    return res.status(201).json({ messageResult });
 })
 
 const createChannel = asyncWrapper(async(req, res) => {
-    const pythonPromise = () => {
-        return new Promise((resolve, reject) => {
-            const python = spawn("python", ['./slackBot/createChannel.py', req.body.channel]);
-            python.stdout.on("data", (data) => {
-                resolve(data.toString());
-            });
-
-            python.stderr.on("data", (data) => {
-                reject(data.toString());
-            });
-        });
-    };
-    try {
-        const channelId = await pythonPromise();
-        res.status(201).json({ channelId });
-    } catch (error) {
-        res.status(500).json(error);
+    const result = await client.conversations.create({ name: req.body.channel });
+    if (!result.ok) {
+        return next(createCustomError(`Error : ${result['error']}`, 500))
     }
-    return res;
+    channelId = result["channel"]["id"].trim();
+    client.conversations.members(channel = channelId, limit = 2);
+    return res.status(201).json({ channelId });
 })
 
 module.exports = { sendMessage, createChannel }
