@@ -21,7 +21,7 @@ app.use('/api/v1/email', email);
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 const start = async() => {
     try {
