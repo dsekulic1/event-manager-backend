@@ -15,7 +15,7 @@ const mail = nodemailer.createTransport({
 
 const sendEmail = asyncWrapper(async(req, res) => {
 
-    var mail_content = "Poštovani,\n" + req.body.emailMessage + "\n\nLijep pozdrav,\nVaše obavijesti."
+    var mail_content = "Poštovani,\n\n" + req.body.emailMessage + "\n\nLijep pozdrav,\nVaše obavijesti."
     var mailOptions = {
         from: SENDER_ADDRESS,
         to: req.body.emailTo,
@@ -27,7 +27,7 @@ const sendEmail = asyncWrapper(async(req, res) => {
         return next(createCustomError(`Error : ${error}`, 500))
     }
     mail.close();
-    return res.status(200).json({ response });
+    return res.status(201).json({ response });
 })
 
 module.exports = sendEmail
