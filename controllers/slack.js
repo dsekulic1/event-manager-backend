@@ -1,26 +1,20 @@
 const asyncWrapper = require('../middleware/async')
 require('dotenv').config()
 const { spawn } = require('child_process');
+const { WebClient } = require('@slack/web-api');
+const token = process.env.SLACK_API_TOKEN;
+const client = new WebClient(token);
 
 const sendMessage = asyncWrapper(async(req, res) => {
-    const pythonPromise = () => {
-        return new Promise((resolve, reject) => {
-            const python = spawn("python", ['./slackBot/slack.py', req.body.message]);
-            python.stdout.on("data", (data) => {
-                resolve(data.toString());
-            });
-
-            python.stderr.on("data", (data) => {
-                reject(data.toString());
-            });
-        });
-    };
-    // need to refactoring this to use custom error message and handle all on frontend
     try {
-        const dataFromPython = await pythonPromise();
-        res.status(201).json(dataFromPython);
+        // Call the chat.postMessage method using the WebClient
+        const result = await client.chat.postMessage({
+            channel: '#new',
+            text: ':100: Hello :tada:'
+        });
+        //console.log(result);
     } catch (error) {
-        res.status(500).json(error);
+        // console.error(error);
     }
 })
 
