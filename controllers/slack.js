@@ -1,6 +1,5 @@
 const asyncWrapper = require('../middleware/async')
 require('dotenv').config()
-const { spawn } = require('child_process');
 const { WebClient } = require('@slack/web-api');
 const token = process.env.SLACK_API_TOKEN;
 const client = new WebClient(token);
@@ -19,7 +18,11 @@ const createChannel = asyncWrapper(async(req, res) => {
         return next(createCustomError(`Error : ${result['error']}`, 500))
     }
     channelId = result["channel"]["id"].trim();
-    client.conversations.members(channel = channelId, limit = 2);
+    console.log(channelId);
+    result = await client.conversations.members(channel = channelId, limit = 2);
+    if (!result.ok) {
+        return next(createCustomError(`Error : ${result['error']}`, 500))
+    }
     return res.status(201).json({ channelId });
 })
 
