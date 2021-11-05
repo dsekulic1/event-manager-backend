@@ -6,7 +6,7 @@ const app = express()
 
 // rest of the packages
 const cookieParser = require('cookie-parser')
-const helmet = require('helmet')
+//const helmet = require('helmet')
 const xss = require('xss-clean')
 const cors = require('cors')
 const mongoSanitize = require('express-mongo-sanitize')
