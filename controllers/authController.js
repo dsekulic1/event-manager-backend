@@ -49,7 +49,8 @@ const passwordReset = async (req, res) => {
     },
     { new: true }
   )
-  const url = 'http://localhost:3000/user/reset-password/' + token
+  const url =
+    'https://manager-events-2021.herokuapp.com//user/reset-password/' + token
   try {
     sendPasswordResetEmail(user.email, user.name, url, 'Password reset')
     res.status(StatusCodes.OK).json({ user: token })
@@ -58,8 +59,6 @@ const passwordReset = async (req, res) => {
   }
 }
 const resetPassword = async (req, res) => {
-  console.log(req.body)
-
   User.findOne({
     reset_password_token: req.body.token,
     reset_password_expires: {
