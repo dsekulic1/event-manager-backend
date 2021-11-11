@@ -1,7 +1,10 @@
 const asyncWrapper = require('../middleware/async')
 require('dotenv').config()
+const fs = require('fs')
+var handlebars = require('handlebars')
 var nodemailer = require('nodemailer')
-
+const path = './templates/forgot-password-email.html'
+const pathReseted = './templates/reset-password-email.html'
 const SENDER_ADDRESS = process.env.SENDER_ADDRESS
 const SENDER_PASS = process.env.SENDER_PASS
 const mail = nodemailer.createTransport({
@@ -38,4 +41,62 @@ const sendEmail = asyncWrapper(async (req, res) => {
   mail.close()
 })
 
-module.exports = sendEmail
+//templates\forgot-password-email.html
+const sendPasswordResetEmail = async (emailTo, name, url, subject) => {
+  fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
+    if (err) {
+      //
+      return err
+      //console.log(err)
+    } else {
+      var template = handlebars.compile(html)
+      var replacements = {
+        name: name,
+        url: url,
+      }
+      var htmlToSend = template(replacements)
+      var mailOptions = {
+        from: SENDER_ADDRESS,
+        to: emailTo,
+        subject: subject,
+        html: htmlToSend,
+      }
+
+      try {
+        mail.sendMail(mailOptions)
+      } catch (error) {
+        console.log(error)
+      }
+      mail.close()
+    }
+  })
+}
+const sendPasswordResetedEmail = async (emailTo, name, subject) => {
+  fs.readFile(pathReseted, { encoding: 'utf-8' }, function (err, html) {
+    if (err) {
+      //
+      return err
+      //console.log(err)
+    } else {
+      var template = handlebars.compile(html)
+      var replacements = {
+        name: name,
+      }
+      var htmlToSend = template(replacements)
+      var mailOptions = {
+        from: SENDER_ADDRESS,
+        to: emailTo,
+        subject: subject,
+        html: htmlToSend,
+      }
+
+      try {
+        mail.sendMail(mailOptions)
+      } catch (error) {
+        console.log(error)
+      }
+      mail.close()
+    }
+  })
+}
+module.exports = { sendEmail, sendPasswordResetEmail, sendPasswordResetedEmail }
