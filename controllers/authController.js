@@ -50,7 +50,7 @@ const passwordReset = async (req, res) => {
     { new: true }
   )
   const url =
-    'https://manager-events-2021.herokuapp.com//user/reset-password/' + token
+    'https://manager-events-2021.herokuapp.com/user/reset-password/' + token
   try {
     sendPasswordResetEmail(user.email, user.name, url, 'Password reset')
     res.status(StatusCodes.OK).json({ user: token })
