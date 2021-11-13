@@ -1,15 +1,29 @@
 const mongoose = require('mongoose')
 
 const TaskSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
-    required: [true, 'must provide name'],
+    required: [true, 'must provide title'],
     trim: true,
     maxlength: [20, 'name can not be more than 20 characters'],
   },
-  completed: {
+  start: {
+    type: Date,
+    required: [true, 'must provide start date'],
+  },
+  end: {
+    type: Date,
+    required: [true, 'must provide end date'],
+  },
+  allDay: {
     type: Boolean,
+    require: [false],
     default: false,
+  },
+  resourceId: {
+    type: Number,
+    require: [false],
+    default: 1,
   },
 })
 
