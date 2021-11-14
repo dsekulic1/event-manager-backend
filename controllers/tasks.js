@@ -10,7 +10,14 @@ const createTask = asyncWrapper(async (req, res) => {
   const task = await Task.create(req.body)
   res.status(201).json({ task })
 })
-
+const getTaskByUser = asyncWrapper(async (req, res, next) => {
+  const { userId: userId } = req.params
+  const tasks = await Task.find({ userId: userId })
+  if (!task) {
+    return next(CustomError.NotFoundError(`No task with id : ${userId}`))
+  }
+  res.status(200).json({ tasks })
+})
 const getTask = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params
   const task = await Task.findOne({ _id: taskID })
@@ -48,4 +55,5 @@ module.exports = {
   getTask,
   updateTask,
   deleteTask,
+  getTaskByUser,
 }
