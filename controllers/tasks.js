@@ -11,9 +11,9 @@ const createTask = asyncWrapper(async (req, res) => {
   res.status(201).json({ task })
 })
 const getTaskByUser = asyncWrapper(async (req, res, next) => {
-  const { userId: userId } = req.params
+  const { userId } = req.params
   const tasks = await Task.find({ userId: userId })
-  if (!task) {
+  if (!tasks) {
     return next(CustomError.NotFoundError(`No task with id : ${userId}`))
   }
   res.status(200).json({ tasks })
