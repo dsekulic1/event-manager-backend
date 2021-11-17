@@ -49,6 +49,13 @@ const updateTask = asyncWrapper(async (req, res, next) => {
   res.status(200).json({ task })
 })
 const getTodayTasks = asyncWrapper(async () => {
+  //{createdAt:{$gte:ISODate("2021-01-01"),$lt:ISODate("2020-05-01"}}
+  //items.find({
+  //  created_at: {
+  //     $gte: ISODate("2010-04-29T00:00:00.000Z"),
+  //   $lt: ISODate("2010-05-01T00:00:00.000Z")
+  //}
+  //})
   const dateToday = Date.now()
   const tasks = await Task.find({})
   return { tasks }

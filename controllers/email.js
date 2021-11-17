@@ -128,9 +128,29 @@ const sendConfirmationEmail = async (emailTo, name, subject) => {
     }
   })
 }
+
+const sendEventEmail = async (emailTo) => {
+  var mail_content =
+    'Poštovani,\n\n' + 'Proba Eventa' + '\n\nLijep pozdrav,\nVaše obavijesti.'
+  var mailOptions = {
+    from: SENDER_ADDRESS,
+    to: 'davorsekulic2@gmail.com',
+    subject: 'Proba schedulera',
+    text: mail_content,
+  }
+
+  try {
+    mail.sendMail(mailOptions)
+  } catch (error) {
+    console.log(error)
+  }
+  mail.close()
+}
+
 module.exports = {
   sendEmail,
   sendPasswordResetEmail,
   sendPasswordResetedEmail,
   sendConfirmationEmail,
+  sendEventEmail,
 }
