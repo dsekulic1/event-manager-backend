@@ -48,6 +48,11 @@ const updateTask = asyncWrapper(async (req, res, next) => {
 
   res.status(200).json({ task })
 })
+const getTodayTasks = asyncWrapper(async () => {
+  const dateToday = Date.now()
+  const tasks = await Task.find({})
+  return { tasks }
+})
 
 module.exports = {
   getAllTasks,
@@ -56,4 +61,5 @@ module.exports = {
   updateTask,
   deleteTask,
   getTaskByUser,
+  getTodayTasks,
 }
