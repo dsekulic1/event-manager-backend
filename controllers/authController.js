@@ -3,7 +3,11 @@ const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 const { attachCookiesToResponse, createTokenUser } = require('../utils')
 const jwt = require('jsonwebtoken')
-const { sendPasswordResetEmail, sendPasswordResetedEmail } = require('./email')
+const {
+  sendPasswordResetEmail,
+  sendPasswordResetedEmail,
+  sendConfirmationEmail,
+} = require('./email')
 
 const register = async (req, res) => {
   const { email, name, password } = req.body
@@ -23,6 +27,7 @@ const register = async (req, res) => {
     password,
     role,
   })
+  sendConfirmationEmail(user.email, user.name, 'Successfully registered')
   const tokenUser = createTokenUser(user)
   attachCookiesToResponse({ res, user: tokenUser })
   res.status(StatusCodes.CREATED).json({ user: tokenUser })
