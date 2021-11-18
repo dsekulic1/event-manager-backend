@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Task = require('../models/Task')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 const {
@@ -58,6 +59,12 @@ const updateUserPassword = async (req, res) => {
   await user.save()
   res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated.' })
 }
+const getUsers = async () => {
+  var users = ''
+  await User.find({}, { _id: 1, name: 1, email: 1 }).then()
+  // console.log(users)
+  return users
+}
 
 module.exports = {
   getAllUsers,
@@ -65,6 +72,7 @@ module.exports = {
   showCurrentUser,
   updateUser,
   updateUserPassword,
+  getUsers,
 }
 
 // update user with findOneAndUpdate

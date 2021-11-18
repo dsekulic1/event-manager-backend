@@ -6,6 +6,7 @@ var nodemailer = require('nodemailer')
 const path = './templates/forgot-password-email.html'
 const pathReseted = './templates/reset-password-email.html'
 const confirmation = './templates/register-successful.html'
+const event = './templates/event-scheduler.html'
 const SENDER_ADDRESS = process.env.SENDER_ADDRESS
 const SENDER_PASS = process.env.SENDER_PASS
 const mail = nodemailer.createTransport({
@@ -129,22 +130,37 @@ const sendConfirmationEmail = async (emailTo, name, subject) => {
   })
 }
 
-const sendEventEmail = async (emailTo) => {
-  var mail_content =
-    'Poštovani,\n\n' + 'Proba Eventa' + '\n\nLijep pozdrav,\nVaše obavijesti.'
-  var mailOptions = {
-    from: SENDER_ADDRESS,
-    to: 'davorsekulic2@gmail.com',
-    subject: 'Proba schedulera',
-    text: mail_content,
-  }
+const sendEventEmail = async (email, data) => {
+  console.log(email + '---' + data)
+  fs.readFile(event, { encoding: 'utf-8' }, function (err, html) {
+    if (err) {
+      //
+      return err
+      //console.log(err)
+    } else {
+      var template = handlebars.compile(html)
+      var replacements = {
+        name: data.name,
+        title: data.title,
+        start: data.start,
+        end: data.end,
+      }
+      var htmlToSend = template(replacements)
+      var mailOptions = {
+        from: SENDER_ADDRESS,
+        to: email,
+        subject: 'Beta version',
+        html: htmlToSend,
+      }
 
-  try {
-    mail.sendMail(mailOptions)
-  } catch (error) {
-    console.log(error)
-  }
-  mail.close()
+      try {
+        mail.sendMail(mailOptions)
+      } catch (error) {
+        console.log(error)
+      }
+      mail.close()
+    }
+  })
 }
 
 module.exports = {
