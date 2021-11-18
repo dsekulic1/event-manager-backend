@@ -12,10 +12,10 @@ const sendMessage = asyncWrapper(async (req, res) => {
       text: ':100:' + req.body.message + ':tada:',
     })
   } catch (error) {
-    //console.log(error)
+    return next(createCustomError(`Error : ${result['error']}`, 400))
   }
   if (!messageResult.ok) {
-    return next(createCustomError(`Error : ${messageResult['error']}`, 500))
+    return next(createCustomError(`Error : ${messageResult['error']}`, 400))
   }
   return res.status(201).json({ messageResult })
 })
