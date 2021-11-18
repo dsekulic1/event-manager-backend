@@ -145,7 +145,7 @@ const deleteTaskScheduler = (taskId) => {
 }
 
 module.exports = {
-  jobForAdd,
-  everyDayJob,
-  deleteTaskScheduler,
+  jobForAdd: jobForAdd,
+  everyDayJob: everyDayJob,
+  deleteTaskScheduler: deleteTaskScheduler,
 }

@@ -6,10 +6,13 @@ const getAllTasks = asyncWrapper(async (req, res) => {
   const tasks = await Task.find({})
   res.status(200).json({ tasks })
 })
-
+function added() {
+  console.log('usao')
+  jobForAdd()
+}
 const createTask = asyncWrapper(async (req, res) => {
   const task = await Task.create(req.body)
-  jobForAdd()
+  //added()
   res.status(201).json({ task })
 })
 const getTaskByUser = asyncWrapper(async (req, res, next) => {
@@ -34,7 +37,7 @@ const deleteTask = asyncWrapper(async (req, res, next) => {
   if (!task) {
     return next(CustomError.NotFoundError(`No task with id : ${taskID}`))
   }
-  deleteTaskScheduler(taskID)
+  //deleteTaskScheduler(taskID)
   res.status(200).json({ task })
 })
 const updateTask = asyncWrapper(async (req, res, next) => {
@@ -49,7 +52,7 @@ const updateTask = asyncWrapper(async (req, res, next) => {
     return next(CustomError.NotFoundError(`No task with id : ${taskID}`))
   }
   //napravit da se updateuje samo taj task
-  jobForAdd()
+  // jobForAdd()
   res.status(200).json({ task })
 })
 const getTodayTasks = asyncWrapper(async () => {

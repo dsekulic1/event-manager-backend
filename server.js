@@ -1,4 +1,4 @@
-const { everyDayJob } = require('./controllers/scheduleController')
+const { everyDayJob, jobForAdd } = require('./controllers/scheduleController')
 require('dotenv').config()
 require('express-async-errors')
 
@@ -68,4 +68,5 @@ const start = async () => {
   }
 }
 everyDayJob()
+jobForAdd()
 start()
