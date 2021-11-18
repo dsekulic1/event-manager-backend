@@ -143,8 +143,9 @@ const everyDayJob = () => {
 const deleteTaskScheduler = (taskId) => {
   schedule.cancelJob(schedules[`${taskId}`])
 }
+
 module.exports = {
-  jobForAdd: jobForAdd,
-  everyDayJob: everyDayJob,
-  deleteTaskScheduler: deleteTaskScheduler,
+  jobForAdd,
+  everyDayJob,
+  deleteTaskScheduler,
 }

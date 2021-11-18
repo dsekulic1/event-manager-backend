@@ -1,7 +1,4 @@
-const {
-  jobForAdd,
-  deleteTaskScheduler,
-} = require('./controllers/scheduleController')
+const { jobForAdd, deleteTaskScheduler } = require('./scheduleController')
 const Task = require('../models/Task')
 const asyncWrapper = require('../middleware/async')
 const CustomError = require('../errors')
