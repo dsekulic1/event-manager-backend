@@ -75,7 +75,7 @@ const jobForAdd = () => {
 }
 
 const everyDayJob = () => {
-  schedule.scheduleJob('*/0 */0 * * *', async () => {
+  schedule.scheduleJob('*/27 * * * *', async () => {
     for (const job in schedule.scheduledJobs) schedule.cancelJob(job)
     try {
       //getting tasks from db

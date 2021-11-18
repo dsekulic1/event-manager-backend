@@ -67,6 +67,6 @@ const start = async () => {
     console.log(error)
   }
 }
-//everyDayJob()
-jobForAdd()
+everyDayJob()
+//jobForAdd()
 start()
