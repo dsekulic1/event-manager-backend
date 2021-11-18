@@ -1,3 +1,5 @@
+const { StatusCodes } = require('http-status-codes')
+const CustomError = require('../errors')
 const asyncWrapper = require('../middleware/async')
 require('dotenv').config()
 const fs = require('fs')
@@ -95,7 +97,7 @@ const sendPasswordResetedEmail = async (emailTo, name, subject) => {
       try {
         mail.sendMail(mailOptions)
       } catch (error) {
-        console.log(error)
+        throw new CustomError.BadRequestError(error)
       }
       mail.close()
     }
@@ -123,7 +125,7 @@ const sendConfirmationEmail = async (emailTo, name, subject) => {
       try {
         mail.sendMail(mailOptions)
       } catch (error) {
-        console.log(error)
+        throw new CustomError.BadRequestError(error)
       }
       mail.close()
     }
@@ -131,7 +133,6 @@ const sendConfirmationEmail = async (emailTo, name, subject) => {
 }
 
 const sendEventEmail = async (email, data) => {
-  console.log(email + '---' + data)
   fs.readFile(event, { encoding: 'utf-8' }, function (err, html) {
     if (err) {
       //
@@ -156,7 +157,7 @@ const sendEventEmail = async (email, data) => {
       try {
         mail.sendMail(mailOptions)
       } catch (error) {
-        console.log(error)
+        throw new CustomError.BadRequestError(error)
       }
       mail.close()
     }
