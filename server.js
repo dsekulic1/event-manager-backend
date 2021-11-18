@@ -68,5 +68,5 @@ const start = async () => {
   }
 }
 everyDayJob()
-jobForAdd()
+//jobForAdd()
 start()
