@@ -1,12 +1,13 @@
 const { sendEventEmail } = require('./email')
 const { getTodayTasks } = require('./tasks')
 const { getUsers } = require('./userController')
-
+const CustomError = require('../errors')
 const schedule = require('node-schedule')
 const User = require('../models/User')
 const Task = require('../models/Task')
 module.exports = () => {
-  schedule.scheduleJob('*/0 */2 * * *', async () => {
+  schedule.scheduleJob('*/0 */0 * * *', async () => {
+    for (const job in schedule.scheduledJobs) schedule.cancelJob(job)
     try {
       //getting tasks from db
       var x = new Date().getTimezoneOffset() * 60000
@@ -35,17 +36,17 @@ module.exports = () => {
         const { name, email } = users.filter((obj) => {
           return obj._id == userId
         })[0]
-        console.log(name, email)
+
         var dateS = new Date(start)
         var hours = dateS.getHours()
         var minutes = dateS.getMinutes()
         if (minutes === 0) {
-          minutes = minutes + 30
+          minutes = 30
           hours = hours - 1
         } else {
           minutes = minutes - 30
         }
-
+        console.log(hours + '----' + minutes)
         const data = {
           name: name,
           title: title,
@@ -61,6 +62,7 @@ module.exports = () => {
       })
     } catch (error) {
       console.log(error)
+      throw new CustomError.BadRequestError(error)
     }
   })
 }
