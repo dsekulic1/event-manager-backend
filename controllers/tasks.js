@@ -48,6 +48,32 @@ const updateTask = asyncWrapper(async (req, res, next) => {
 
   res.status(200).json({ task })
 })
+const getTodayTasks = asyncWrapper(async () => {
+  //{createdAt:{$gte:ISODate("2021-01-01"),$lt:ISODate("2020-05-01"}}
+  //items.find({
+  //  created_at: {
+  //     $gte: ISODate("2010-04-29T00:00:00.000Z"),
+  //   $lt: ISODate("2010-05-01T00:00:00.000Z")
+  //}
+  //})
+
+  const startDate = new Date().toISOString().split('T')[0]
+  const date = new Date()
+  date.setDate(date.getDate() + 1)
+  const endDate = date.toISOString().split('T')[0]
+
+  const tasks = await Task.find(
+    {
+      start: {
+        $gte: startDate,
+        $lt: endDate,
+      },
+    },
+    { _id: 1, title: 1, start: 1, end: 1, userId: 1 }
+  )
+  //console.log(tasks)
+  return tasks
+})
 
 module.exports = {
   getAllTasks,
@@ -56,4 +82,5 @@ module.exports = {
   updateTask,
   deleteTask,
   getTaskByUser,
+  getTodayTasks,
 }
